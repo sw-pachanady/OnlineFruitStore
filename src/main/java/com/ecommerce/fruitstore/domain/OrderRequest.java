@@ -5,6 +5,11 @@ public class OrderRequest {
     int apples;
     int oranges;
 
+    public OrderRequest(int apples, int oranges) {
+        this.apples = apples;
+        this.oranges = oranges;
+    }
+
     public int getApples() {
         return apples;
     }

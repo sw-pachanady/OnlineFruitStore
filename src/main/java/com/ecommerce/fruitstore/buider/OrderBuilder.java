@@ -1,5 +1,6 @@
 package com.ecommerce.fruitstore.buider;
 
+import com.ecommerce.fruitstore.NumberFormatter;
 import com.ecommerce.fruitstore.domain.CustomerOrder;
 import com.ecommerce.fruitstore.domain.OrderItem;
 
@@ -16,7 +17,7 @@ public class OrderBuilder {
         orderItem.setItemName(itemName);
         orderItem.setQuantity(quantity);
         orderItem.setUnitPrice(unitPrice);
-        orderItem.setTotalPrice(unitPrice * quantity);
+        orderItem.setTotalPrice(NumberFormatter.formatDecimal(unitPrice * quantity));
         orderItemList.add(orderItem);
         return this;
     }
@@ -24,6 +25,7 @@ public class OrderBuilder {
     public CustomerOrder build() {
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setOrderItems(orderItemList);
+        customerOrder.setOrderDate(java.time.LocalDateTime.now());
 
         for (OrderItem orderItem : orderItemList) {
             orderItem.setOrder(customerOrder);

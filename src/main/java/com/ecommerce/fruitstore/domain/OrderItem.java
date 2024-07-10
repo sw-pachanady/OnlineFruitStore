@@ -2,6 +2,7 @@ package com.ecommerce.fruitstore.domain;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Order;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_item")
@@ -18,7 +19,8 @@ public class OrderItem {
     private String itemName;
     private int quantity;
     private double unitPrice;
-    private double totalPrice;
+
+    private BigDecimal totalPrice;
 
     public Long getId() {
         return id;
@@ -60,11 +62,13 @@ public class OrderItem {
         this.unitPrice = unitPrice;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+
 }

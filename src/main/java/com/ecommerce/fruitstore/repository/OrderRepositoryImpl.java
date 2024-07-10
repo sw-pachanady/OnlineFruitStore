@@ -15,7 +15,13 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     @Transactional
-    public void saveOrder(CustomerOrder customerOrder) {
-        entityManager.persist(customerOrder);
+    public CustomerOrder saveOrder(CustomerOrder customerOrder) {
+
+        if (customerOrder.getId() == null) {
+            entityManager.persist(customerOrder);
+        } else {
+            customerOrder = entityManager.merge(customerOrder);
+        }
+        return customerOrder;
     }
 }

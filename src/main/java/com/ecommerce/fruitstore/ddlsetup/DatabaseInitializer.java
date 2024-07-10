@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
-/** create tables in the in memory H2  database using InitializingBean*/
+/**
+ * create tables in the in memory H2  database using InitializingBean
+ */
 @Component
 public class DatabaseInitializer implements InitializingBean {
     private final JdbcTemplate jdbcTemplate;
@@ -35,11 +37,8 @@ public class DatabaseInitializer implements InitializingBean {
     private void createCustomerOrderTable() {
         String sql = "CREATE TABLE IF NOT EXISTS customer_order (" +
                 "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                "item_name VARCHAR(255), " +
-                "order_date DATE, " +
-                "quantity INTEGER NOT NULL, " +
-                "total_price DOUBLE NOT NULL, " +
-                "unit_price DOUBLE NOT NULL)";
+                "order_date TIMESTAMP NOT NULL " +
+                ")";
         jdbcTemplate.execute(sql);
     }
 
