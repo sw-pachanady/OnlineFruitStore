@@ -22,7 +22,6 @@ public class CustomerOrder {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-
     public CustomerOrder() {
         orderItems = new ArrayList<>();
     }
