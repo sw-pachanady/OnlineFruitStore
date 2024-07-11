@@ -4,7 +4,6 @@ import com.ecommerce.fruitstore.NumberFormatter;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 @Component
@@ -16,7 +15,7 @@ public class PromotionManagerImpl implements PromotionManager {
      */
     public PromotionApplied applyPromotion(double price, int quantity, List<Long> promotionCodes) {
         // considering only one promotion for any fruit for now, we can make this logic to apply multiple promotions later
-        int promotionId = promotionCodes.size() > 0? promotionCodes.get(0).intValue(): 0;
+        int promotionId = promotionCodes!=null && promotionCodes.size() > 0? promotionCodes.get(0).intValue(): 0;
         if (promotionId == 1) {
             return applyPromotion1(price, quantity, promotionId);
         } else if (promotionId == 2) {
@@ -31,7 +30,7 @@ public class PromotionManagerImpl implements PromotionManager {
      */
     private PromotionApplied applyPromotion1(double price, int quantity, int promotionId) {
         int updatedQty = quantity * 2;
-        double updatedPrice = NumberFormatter.formatDecimal(BigDecimal.valueOf(price).multiply(BigDecimal.valueOf(0.5)).doubleValue()).doubleValue();
+        double updatedPrice = NumberFormatter.formatBigDecimal(BigDecimal.valueOf(price).multiply(BigDecimal.valueOf(0.5)).doubleValue()).doubleValue();
         return new PromotionApplied(updatedPrice, updatedQty, promotionId);
     }
 

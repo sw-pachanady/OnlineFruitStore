@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 /** A service class for doing CRUD operations for order maintainance*/
@@ -42,13 +43,13 @@ public class OrderServiceImpl implements OrderService {
         int apples = orderRequest.getApples();
         if (orderRequest.getApples() > 0) {
             PromotionApplied promoAppled = promotionManager.applyPromotion(pricingService.getPrice(FruitType.APPLE), orderRequest.getApples(), orderRequest.getApplePromotionCodes());
-            builder.addItem("APPLE", promoAppled.getUpdatedQuantity(), promoAppled.getUnitPrice());
+            builder.addItem("APPLE", promoAppled.getUpdatedQuantity(), NumberFormatter.formatDecimal(promoAppled.getUnitPrice()));
             apples = promoAppled.getUpdatedQuantity();
         }
         int oranges = orderRequest.getOranges();
         if (orderRequest.getOranges() > 0) {
             PromotionApplied promoAppled = promotionManager.applyPromotion(pricingService.getPrice(FruitType.ORANGE), orderRequest.getOranges(), orderRequest.getOrangePromotionCodes());
-            builder.addItem("ORANGE", promoAppled.getUpdatedQuantity(), pricingService.getPrice(FruitType.ORANGE));
+            builder.addItem("ORANGE", promoAppled.getUpdatedQuantity(), promoAppled.getUnitPrice());
             oranges = promoAppled.getUpdatedQuantity();
         }
 
@@ -57,7 +58,15 @@ public class OrderServiceImpl implements OrderService {
         logger.info("Order ID: " + order.getId());
         double totalPrice = order.getOrderItems().stream().mapToDouble(item -> item.getTotalPrice().doubleValue()).sum();
 
-        OrderSummary orderSummary = new OrderSummary(order.getId(), apples, oranges, NumberFormatter.formatDecimal(totalPrice), LocalDateTime.now());
+        OrderSummary orderSummary = new OrderSummary(order.getId(), apples, oranges, NumberFormatter.formatBigDecimal(totalPrice), LocalDateTime.now());
         return orderSummary;
+    }
+
+    public  CustomerOrder getOrderById(Long id) {
+        return orderRepository.getOrderById(id);
+    }
+
+    public List<CustomerOrder> getAllOrders() {
+        return orderRepository.getAllOrders();
     }
 }

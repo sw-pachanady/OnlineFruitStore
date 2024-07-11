@@ -19,7 +19,7 @@ public class OrderBuilder {
         orderItem.setItemName(itemName);
         orderItem.setQuantity(quantity);
         orderItem.setUnitPrice(unitPrice);
-        orderItem.setTotalPrice(NumberFormatter.formatDecimal(unitPrice * quantity));
+        orderItem.setTotalPrice(NumberFormatter.formatBigDecimal(unitPrice * quantity));
         orderItemList.add(orderItem);
         return this;
     }

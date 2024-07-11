@@ -58,7 +58,7 @@ public class OrderServiceTest {
         assertNotNull(summary);
         assertNotNull(summary.getOrderId());
         assertEquals(1L, summary.getOrderId());
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatDecimal(2.3)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(2.3)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(3, summary.getApples());
@@ -79,7 +79,7 @@ public class OrderServiceTest {
         OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, promotionManager);
         OrderSummary summary = orderService.createdOrder(new OrderRequest(3, 0, Collections.emptyList(), Collections.emptyList()));
         assertNotNull(summary);
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatDecimal(1.8)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(1.8)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(3, summary.getApples());
@@ -104,7 +104,7 @@ public class OrderServiceTest {
         OrderSummary summary = orderService.createdOrder(new OrderRequest(0, 2, Collections.emptyList(), Collections.emptyList()));
         assertNotNull(summary);
         //assertEquals(3L, summary.getOrderId());
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatDecimal(0.5)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(0.5)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(0, summary.getApples());
@@ -152,7 +152,7 @@ public class OrderServiceTest {
         assertNotNull(summary);
         assertNotNull(summary.getOrderId());
         assertEquals(1L, summary.getOrderId());
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatDecimal(2.8)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(2.8)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(6, summary.getApples());
@@ -180,7 +180,7 @@ public class OrderServiceTest {
         assertNotNull(summary);
         assertNotNull(summary.getOrderId());
         assertEquals(1L, summary.getOrderId());
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatDecimal(4.1)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(4.1)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(12, summary.getApples());
@@ -192,7 +192,7 @@ public class OrderServiceTest {
         orderItem.setItemName(itemName);
         orderItem.setQuantity(quantity);
         orderItem.setUnitPrice(unitPrice);
-        orderItem.setTotalPrice(NumberFormatter.formatDecimal(quantity * unitPrice));
+        orderItem.setTotalPrice(NumberFormatter.formatBigDecimal(quantity * unitPrice));
         return orderItem;
     }
 }

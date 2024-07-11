@@ -1,5 +1,8 @@
 package com.ecommerce.fruitstore.domain;
 
+import com.ecommerce.fruitstore.NumberFormatter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.criteria.Order;
 import java.math.BigDecimal;
@@ -12,8 +15,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private CustomerOrder order;
 
     private String itemName;
@@ -57,7 +61,7 @@ public class OrderItem {
     }
 
     public double getUnitPrice() {
-        return unitPrice;
+        return NumberFormatter.formatDecimal(unitPrice);
     }
 
     public void setUnitPrice(double unitPrice) {
