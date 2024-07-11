@@ -41,8 +41,6 @@ public class OrderSummary {
         this.totalPrice = totalPrice;
         this.orderDateTime = orderDateTime;
     }
-
-
 }
 
 

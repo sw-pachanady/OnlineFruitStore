@@ -11,7 +11,6 @@ public class OrderRequest {
 
     private List<Long> orangePromotionCodes;
 
-
     public OrderRequest(int apples, int oranges, List<Long> applePromotionCodes, List<Long> orangePromotionCodes) {
         this.apples = apples;
         this.oranges = oranges;

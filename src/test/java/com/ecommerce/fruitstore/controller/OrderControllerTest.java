@@ -12,13 +12,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,5 +53,34 @@ public class OrderControllerTest {
                         .content(objectMapper.writeValueAsString(orderRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(orderSummary)));
+    }
+
+    @Test
+    void testCreateOrderWithPromotions() throws Exception {
+        OrderRequest orderRequest = new OrderRequest(3, 3, List.of(1L), List.of(2L));
+
+
+        OrderSummary orderSummary = new OrderSummary(1L, 6, 4, BigDecimal.valueOf(2.8), LocalDateTime.now()); // Applying $3 discount
+
+        when(orderService.createdOrder(any(OrderRequest.class))).thenReturn(orderSummary);
+
+        mockMvc.perform(post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(orderSummary)));
+    }
+
+    @Test
+    void testInvalidEndpoint() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/orders2"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testInvalidMethod() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/orders"))
+                .andExpect(status().isMethodNotAllowed());
+
     }
 }
