@@ -20,6 +20,8 @@ public class OrderItem {
     private int quantity;
     private double unitPrice;
 
+    private int promoId;
+
     private BigDecimal totalPrice;
 
     public Long getId() {
@@ -70,5 +72,11 @@ public class OrderItem {
         this.totalPrice = totalPrice;
     }
 
+    public int getPromoId() {
+        return promoId;
+    }
 
+    public void setPromoId(int promoId) {
+        this.promoId = promoId;
+    }
 }

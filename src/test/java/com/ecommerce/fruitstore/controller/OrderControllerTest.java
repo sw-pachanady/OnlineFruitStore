@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -38,8 +39,7 @@ public class OrderControllerTest {
 
     @Test
     void testCreateOrder() throws Exception {
-        OrderRequest orderRequest = new OrderRequest(3, 2);
-
+        OrderRequest orderRequest = new OrderRequest(3, 2, Collections.emptyList(), Collections.emptyList());
 
         OrderSummary orderSummary = new OrderSummary(1L, 3, 2, BigDecimal.valueOf(2.30), LocalDateTime.now());
 

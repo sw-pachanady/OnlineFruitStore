@@ -50,6 +50,7 @@ public class DatabaseInitializer implements InitializingBean {
                 "quantity INTEGER NOT NULL, " +
                 "unit_price DOUBLE NOT NULL, " +
                 "total_price DOUBLE NOT NULL, " +
+                "promo_id INTEGER   NULL default 0, " +
                 "FOREIGN KEY (order_id) REFERENCES customer_order(id))";
         jdbcTemplate.execute(sql);
     }
