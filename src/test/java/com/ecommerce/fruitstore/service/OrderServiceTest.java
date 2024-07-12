@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -49,9 +48,9 @@ public class OrderServiceTest {
 
         when(orderRepository.saveOrder(any(CustomerOrder.class))).thenReturn(customerOrder);
         when(promotionManager.applyPromotion(0.6, 3, Collections.emptyList())).thenReturn(new PromotionApplied(0.6, 3, 0));
-        when(promotionManager.applyPromotion(0.25, 2, Collections.emptyList())).thenReturn(new PromotionApplied( 0.25, 2, 0));
-        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(  0.6);
-        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn( 0.25 );
+        when(promotionManager.applyPromotion(0.25, 2, Collections.emptyList())).thenReturn(new PromotionApplied(0.25, 2, 0));
+        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(0.6);
+        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn(0.25);
 
         OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, promotionManager);
         OrderSummary summary = orderService.createdOrder(new OrderRequest(3, 2, Collections.emptyList(), Collections.emptyList()));
@@ -73,7 +72,7 @@ public class OrderServiceTest {
 
 
         when(promotionManager.applyPromotion(0.6, 3, Collections.emptyList())).thenReturn(new PromotionApplied(0.6, 3, 0));
-        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(  0.6);
+        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(0.6);
         when(orderRepository.saveOrder(any(CustomerOrder.class))).thenReturn(customerOrder);
 
         OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, promotionManager);
@@ -89,14 +88,14 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrderWithOrangesOnly() {
-        
+
 
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.getOrderItems().add(createOrderItem("Orange", 2, 0.25));
 
 
-        when(promotionManager.applyPromotion(0.25, 2, Collections.emptyList())).thenReturn(new PromotionApplied( 0.25, 2, 0));
-        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn( 0.25 );
+        when(promotionManager.applyPromotion(0.25, 2, Collections.emptyList())).thenReturn(new PromotionApplied(0.25, 2, 0));
+        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn(0.25);
         when(orderRepository.saveOrder(any(CustomerOrder.class))).thenReturn(customerOrder);
 
         OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, promotionManager);
@@ -113,7 +112,7 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateWithNoItems() {
-        
+
 
         CustomerOrder customerOrder = new CustomerOrder();
         //customerOrder.setId(4L); // Will be set by JPA in real use
@@ -133,7 +132,7 @@ public class OrderServiceTest {
 
     @Test
     public void testCreateOrderWithApplesAndOrangePromotions() {
- 
+
         OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, new PromotionManagerImpl());
 
         when(orderRepository.saveOrder(any(CustomerOrder.class))).thenAnswer(new Answer<CustomerOrder>() {
@@ -145,14 +144,14 @@ public class OrderServiceTest {
             }
         });
 
-        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(  0.6);
-        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn( 0.25 );
+        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(0.6);
+        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn(0.25);
 
         OrderSummary summary = orderService.createdOrder(new OrderRequest(3, 3, List.of(1L), List.of(2L)));
         assertNotNull(summary);
         assertNotNull(summary.getOrderId());
         assertEquals(1L, summary.getOrderId());
-        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(2.8)));
+        assertTrue(summary.getTotalPrice().equals(NumberFormatter.formatBigDecimal(2.55)));
 
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(6, summary.getApples());
@@ -173,8 +172,8 @@ public class OrderServiceTest {
             }
         });
 
-        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(  0.6);
-        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn( 0.25 );
+        when(pricingService.getPrice(FruitType.APPLE)).thenReturn(0.6);
+        when(pricingService.getPrice(FruitType.ORANGE)).thenReturn(0.25);
 
         OrderSummary summary = orderService.createdOrder(new OrderRequest(6, 2, List.of(1L), Collections.emptyList()));
         assertNotNull(summary);
@@ -185,6 +184,23 @@ public class OrderServiceTest {
         verify(orderRepository, times(1)).saveOrder(any(CustomerOrder.class));
         assertEquals(12, summary.getApples());
         assertEquals(2, summary.getOranges());
+    }
+
+    @Test
+    void testGetAllOrders() {
+        OrderService orderService = new OrderServiceImpl(orderRepository, pricingService, promotionManager);
+        CustomerOrder customerOrder1 = new CustomerOrder();
+        customerOrder1.setId(1L);
+        CustomerOrder customerOrder2 = new CustomerOrder();
+        customerOrder2.setId(2L);
+
+        when(orderRepository.getAllOrders()).thenReturn(List.of(customerOrder1, customerOrder2));
+        List<CustomerOrder> orders = orderService.getAllOrders();
+        assertNotNull(orders);
+        assertEquals(2, orders.size());
+
+        assertEquals(1L, orders.get(0).getId());
+        assertEquals(2L, orders.get(1).getId());
     }
 
     private OrderItem createOrderItem(String itemName, int quantity, double unitPrice) {

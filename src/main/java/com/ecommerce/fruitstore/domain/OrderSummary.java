@@ -14,6 +14,8 @@ public class OrderSummary {
 
     private LocalDateTime orderDateTime;
 
+    private Errors errors;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -34,6 +36,10 @@ public class OrderSummary {
         return orderDateTime;
     }
 
+    public OrderSummary(Errors errors) {
+        this.errors = errors;
+    }
+
     public OrderSummary(Long orderId, int apples, int oranges, BigDecimal totalPrice, LocalDateTime orderDateTime) {
         this.orderId = orderId;
         this.apples = apples;
@@ -41,6 +47,14 @@ public class OrderSummary {
         this.totalPrice = totalPrice;
         this.orderDateTime = orderDateTime;
     }
+    public Errors getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Errors errors) {
+        this.errors = errors;
+    }
+
 }
 
 

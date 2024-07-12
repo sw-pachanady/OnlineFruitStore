@@ -28,6 +28,18 @@ public class OrderItem {
 
     private BigDecimal totalPrice;
 
+    public OrderItem() {
+    }
+
+    public OrderItem(CustomerOrder order, String itemName, int quantity, double unitPrice, int promoId, BigDecimal totalPrice) {
+        this.order = order;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.promoId = promoId;
+        this.totalPrice = totalPrice;
+    }
+
     public Long getId() {
         return id;
     }

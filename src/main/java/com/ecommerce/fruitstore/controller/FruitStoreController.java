@@ -1,6 +1,7 @@
 package com.ecommerce.fruitstore.controller;
 
 import com.ecommerce.fruitstore.domain.CustomerOrder;
+import com.ecommerce.fruitstore.domain.Errors;
 import com.ecommerce.fruitstore.domain.OrderRequest;
 import com.ecommerce.fruitstore.domain.OrderSummary;
 import com.ecommerce.fruitstore.service.OrderService;
@@ -16,13 +17,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class FruitStoreController {
-
+    private final RequestValidator requestValidator;
     @Autowired
     OrderService orderService;
 
+    public FruitStoreController() {
+        this.requestValidator = new RequestValidator();
+    }
+
     @PostMapping
-    public ResponseEntity<OrderSummary> createAppleOrder(@RequestBody OrderRequest appleOrderRequest) {
-        OrderSummary orderSummary = orderService.createdOrder(appleOrderRequest);
+    public ResponseEntity<OrderSummary> createFruitOrder(@RequestBody OrderRequest fruitOrderRequest) {
+
+        Errors validationErrors = requestValidator.validateOrderRequest(fruitOrderRequest);
+        if (!validationErrors.getErrorList().isEmpty()) {
+            return ResponseEntity.badRequest().body(new OrderSummary(validationErrors));
+        }
+        OrderSummary orderSummary = orderService.createdOrder(fruitOrderRequest);
         return ResponseEntity.ok(orderSummary);
     }
 
