@@ -1,6 +1,5 @@
 package com.ecommerce.fruitstore.repository;
 
-
 import com.ecommerce.fruitstore.domain.CustomerOrder;
 import com.ecommerce.fruitstore.domain.OrderItem;
 import org.springframework.jdbc.core.JdbcTemplate;

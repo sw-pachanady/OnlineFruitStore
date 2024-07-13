@@ -1,9 +1,8 @@
 package com.ecommerce.fruitstore.controller;
 
-import com.ecommerce.fruitstore.domain.Errors;
 import com.ecommerce.fruitstore.domain.Error;
+import com.ecommerce.fruitstore.domain.Errors;
 import com.ecommerce.fruitstore.domain.OrderRequest;
-import com.ecommerce.fruitstore.domain.OrderSummary;
 
 /** do some simple validation on the order request */
 public class RequestValidator {
