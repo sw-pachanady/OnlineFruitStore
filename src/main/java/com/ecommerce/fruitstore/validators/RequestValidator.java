@@ -1,4 +1,4 @@
-package com.ecommerce.fruitstore.controller;
+package com.ecommerce.fruitstore.validators;
 
 import com.ecommerce.fruitstore.domain.Error;
 import com.ecommerce.fruitstore.domain.Errors;
