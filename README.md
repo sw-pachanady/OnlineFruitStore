@@ -46,11 +46,12 @@ We currently do not support multiple promotions for the same fruit type in a sin
 ```sh
 git clone https://github.com/sw-pachanady/OnlineFruitStore.git
 cd OnlineFruitStore
-
+```
 ### Build with maven and run the tests
 ```sh
 mvn clean install
-
+```
 ### Run the application
 ```sh
 mvn spring-boot:run
+```
