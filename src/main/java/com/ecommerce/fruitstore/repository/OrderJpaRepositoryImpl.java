@@ -9,8 +9,11 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
+/** Based on prioer experience, in real projects I would use Direct sql and JDBCTemplae instead of JPA,
+ * as implemented in {@link  OrderJdbcRepositoryImpl OrderJdbcRepository} @see OrderJdbcRepositoryImpl */
 @Repository
-public class OrderRepositoryImpl implements OrderRepository {
+public class OrderJpaRepositoryImpl implements OrderRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

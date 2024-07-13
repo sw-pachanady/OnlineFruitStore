@@ -24,7 +24,7 @@ GET /orders/1
 
 GET /orders
 
-We currently do not sjupport multiple promotions for the same fruit type in a single order.
+We currently do not support multiple promotions for the same fruit type in a single order.
 ```
 ## Technologies Used
 - Java

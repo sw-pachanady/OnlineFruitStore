@@ -6,5 +6,5 @@ import java.util.List;
 
 @Component
 public  interface PromotionManager {
-    PromotionApplied applyPromotion(double price, int quantity, List<Long> poromotionCodes);
+    PromotionDetails applyPromotion(double price, int quantity, List<Long> poromotionCodes);
 }

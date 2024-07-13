@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Main controller for eCommerce fruit store, uses Spring
+ * Main controller for online fruit store, uses Spring
  */
 @RestController
 @RequestMapping("/orders")
@@ -32,7 +32,7 @@ public class FruitStoreController {
         if (!validationErrors.getErrorList().isEmpty()) {
             return ResponseEntity.badRequest().body(new OrderSummary(validationErrors));
         }
-        OrderSummary orderSummary = orderService.createdOrder(fruitOrderRequest);
+        OrderSummary orderSummary = orderService.createOrder(fruitOrderRequest);
         return ResponseEntity.ok(orderSummary);
     }
 

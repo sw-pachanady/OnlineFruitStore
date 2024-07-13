@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 import java.util.EnumMap;
 
 /**
- * Simple service to provide pricing information for fruits, in real projects this will be stored in Database and will have complex logic and will take care of several promotions and coupon codes
+ * Simple service to provide pricing information for fruits, in real projects this will be stored in Database and will have complex logic and will take care of
+ * several promotions and coupon codes , holiday sales, flash sales etc
  */
 @Component
 public class PricingService {

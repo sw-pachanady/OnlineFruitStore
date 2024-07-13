@@ -2,7 +2,7 @@ package com.ecommerce.fruitstore.service;
 
 import com.ecommerce.fruitstore.domain.CustomerOrder;
 import com.ecommerce.fruitstore.domain.OrderItem;
-import com.ecommerce.fruitstore.repository.OrderRepositoryImpl;
+import com.ecommerce.fruitstore.repository.OrderJpaRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class OrderRepositoryTest {
 
     @InjectMocks
-    private OrderRepositoryImpl orderRepository;
+    private OrderJpaRepositoryImpl orderRepository;
 
     @Mock
     private EntityManager entityManager;
@@ -67,6 +67,7 @@ public class OrderRepositoryTest {
         verify(entityManager, times(1)).find(CustomerOrder.class, 1L);
     }
 
+    @Test
     public void testSaveOrder() {
         CustomerOrder order = new CustomerOrder();
         order.setId(1L);

@@ -1,14 +1,14 @@
 package com.ecommerce.fruitstore.promos;
 
-public class PromotionApplied {
+public class PromotionDetails {
 
     private final int updatedQuantity;
-    private final double unitPrice;
+    private final double uppdatedUnitPrice;
 
     private final int promoId;
 
-    public PromotionApplied(double unitPrice, int updatedQuantity, int promoId) {
-        this.unitPrice = unitPrice;
+    public PromotionDetails(double uppdatedUnitPrice, int updatedQuantity, int promoId) {
+        this.uppdatedUnitPrice = uppdatedUnitPrice;
         this.updatedQuantity = updatedQuantity;
         this.promoId = promoId;
     }
@@ -18,16 +18,11 @@ public class PromotionApplied {
     }
 
 
-
-    public double getUnitPrice() {
-        return unitPrice;
+    public double getUppdatedUnitPrice() {
+        return uppdatedUnitPrice;
     }
-
-
 
     public int getPromoId() {
         return promoId;
     }
-
-
 }

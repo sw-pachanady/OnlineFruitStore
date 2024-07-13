@@ -1,4 +1,4 @@
-package com.ecommerce.fruitstore;
+package com.ecommerce.fruitstore.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,5 +1,7 @@
 package com.ecommerce.fruitstore.controller;
 
+import com.ecommerce.fruitstore.domain.CustomerOrder;
+import com.ecommerce.fruitstore.domain.OrderItem;
 import com.ecommerce.fruitstore.domain.OrderRequest;
 import com.ecommerce.fruitstore.domain.OrderSummary;
 import com.ecommerce.fruitstore.service.OrderService;
@@ -45,7 +47,7 @@ public class OrderControllerTest {
 
         OrderSummary orderSummary = new OrderSummary(1L, 3, 2, BigDecimal.valueOf(2.30), LocalDateTime.now());
 
-        when(orderService.createdOrder(any(OrderRequest.class))).thenReturn(orderSummary);
+        when(orderService.createOrder(any(OrderRequest.class))).thenReturn(orderSummary);
 
         mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +63,7 @@ public class OrderControllerTest {
 
         OrderSummary orderSummary = new OrderSummary(1L, 6, 4, BigDecimal.valueOf(2.8), LocalDateTime.now()); // Applying $3 discount
 
-        when(orderService.createdOrder(any(OrderRequest.class))).thenReturn(orderSummary);
+        when(orderService.createOrder(any(OrderRequest.class))).thenReturn(orderSummary);
 
         mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,5 +83,39 @@ public class OrderControllerTest {
         ResultActions resultActions = mockMvc.perform(put("/orders"))
                 .andExpect(status().isMethodNotAllowed());
 
+    }
+
+    @Test
+    void testGetOrderById() throws Exception {
+
+        CustomerOrder customerOrder = new CustomerOrder();
+        List<OrderItem> orderItems = List.of(new OrderItem(customerOrder, "Apple", 3, 0.6, 1, BigDecimal.valueOf(1.8)),
+                new OrderItem(customerOrder, "Orange", 2, 0.25, 2, BigDecimal.valueOf(0.5)));
+        customerOrder.setOrderItems(orderItems);
+
+        when(orderService.getOrderById(1L)).thenReturn(customerOrder);
+
+        mockMvc.perform(get("/orders/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(customerOrder)));
+    }
+
+    @Test
+    void testGetAllOrders() throws Exception {
+        CustomerOrder customerOrder1 = new CustomerOrder();
+        List<OrderItem> orderItems1 = List.of(new OrderItem(customerOrder1, "Apple", 3, 0.6, 1, BigDecimal.valueOf(1.8)),
+                new OrderItem(customerOrder1, "Orange", 2, 0.25, 2, BigDecimal.valueOf(0.5)));
+        customerOrder1.setOrderItems(orderItems1);
+
+        CustomerOrder customerOrder2 = new CustomerOrder();
+        List<OrderItem> orderItems2 = List.of(new OrderItem(customerOrder2, "Apple", 3, 0.6, 1, BigDecimal.valueOf(1.8)),
+                new OrderItem(customerOrder2, "Orange", 2, 0.25, 2, BigDecimal.valueOf(0.5)));
+        customerOrder2.setOrderItems(orderItems2);
+
+        when(orderService.getAllOrders()).thenReturn(List.of(customerOrder1, customerOrder2));
+
+        mockMvc.perform(get("/orders"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(List.of(customerOrder1, customerOrder2))));
     }
 }

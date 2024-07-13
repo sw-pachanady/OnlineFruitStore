@@ -1,6 +1,6 @@
 package com.ecommerce.fruitstore.buider;
 
-import com.ecommerce.fruitstore.NumberFormatter;
+import com.ecommerce.fruitstore.util.NumberFormatter;
 import com.ecommerce.fruitstore.domain.CustomerOrder;
 import com.ecommerce.fruitstore.domain.OrderItem;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple builder to convert OrderRequest from web to Order Domain object
+ * Simple builder to convert OrderRequest from request to Order Domain object
  */
 public class OrderBuilder {
 

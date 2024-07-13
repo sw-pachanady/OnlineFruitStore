@@ -1,10 +1,9 @@
 package com.ecommerce.fruitstore.domain;
 
-import com.ecommerce.fruitstore.NumberFormatter;
+import com.ecommerce.fruitstore.util.NumberFormatter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Order;
 import java.math.BigDecimal;
 
 @Entity
