@@ -11,21 +11,22 @@ for apples and oranges. It also supports promotions specific to each fruit type.
 - Retrieve all orders.
 
 ###  Sample Requests
-```json
+
 POST /orders
+```json
 {
   "apples": 2,
   "oranges": 4,
   "applePromotionCodes": [1],
   "orangePromotionCodes": [2]
 }
-
+```
 GET /orders/1
 
 GET /orders
 
 We currently do not support multiple promotions for the same fruit type in a single order.
-```
+
 ## Technologies Used
 - Java
 - Spring Boot
